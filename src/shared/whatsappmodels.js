@@ -1,7 +1,7 @@
-function MessageText(textResponse, number){
+function MessageText(textResponse, number) {
     const data = JSON.stringify({
         "messaging_product": "whatsapp",
-        "to": number,    
+        "to": number,
         "text": {
             "preview_url": true,
             "body": textResponse
@@ -10,50 +10,172 @@ function MessageText(textResponse, number){
     });
     return data;
 }
-
-function MessageList(number){
+function MessageButtonsMenu(number) {
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "to": number,
+        "type": "interactive",
+        "interactive": {
+            "type": "button",
+            "body": {
+                "text": "Selecciona una de nuestras opciones\n*Asesor Virtual* _es una inteligencia artificial equipada con conocimiento juridico para resolver tus inquietudes_ 👨‍💼\n*Menu de opciones* podras consultar requisitos, horarios, solicitar copias, entre otras. "
+            },
+            "action": {
+                "buttons": [
+                    {
+                        "type": "reply",
+                        "reply": {
+                            "id": "asesorVirtual",
+                            "title": "Asesor Virtual"
+                        }
+                    },
+                    {
+                        "type": "reply",
+                        "reply": {
+                            "id": "menuOpciones",
+                            "title": "Menu Opciones"
+                        }
+                    }
+                ]
+            }
+        }
+    });
+    return data;
+}
+function MessageListOpciones(number) {
     const data = JSON.stringify({
         "messaging_product": "whatsapp",
         "to": number,
         "type": "interactive",
         "interactive": {
             "type": "list",
+            "header": {
+                "type": "text",
+                "text": "Hola, Soy SAM!👨‍💼 Tu asesor notarial!"
+            },
             "body": {
-                "text": "✅ Tengo estas opciones"
+                "text": "_Por favor haz click en el botón de *Ver opciones* y seleciona a continuación_"
             },
             "footer": {
-                "text": "Selecciona una de las opciones para poder atenderte"
+                "text": "Notaria Décima(10) de Bucaramanga!!"
             },
             "action": {
                 "button": "Ver opciones",
                 "sections": [
                     {
-                        "title": "Compra y vende productos",
+                        "title": "📜 Escrituración",
                         "rows": [
                             {
-                                "id": "main-comprar",
-                                "title": "Comprar",
-                                "description": "Compra los mejores productos para tu hogar"
+                                "id": "escRequisitos",
+                                "title": "Requisitos Escrituras",
+                                "description": "Consulta de requisitos por actos notariales"
                             },
                             {
-                                "id": "main-vender",
-                                "title": "Vender",
-                                "description": "Vende tus productos"
+                                "id": "escEstadoTramite",
+                                "title": "Estado de trámite",
+                                "description": "Consulta el estado de tu trámite o radiación"
+                            },
+                            {
+                                "id": "escCopias",
+                                "title": "Solicita una copia",
+                                "description": "Soliciita una copia de tu escritura"
                             }
                         ]
                     },
                     {
-                        "title": "📍Centro de atención",
+                        "title": "👪 Registro civil",
                         "rows": [
                             {
-                                "id": "main-agencia",
-                                "title": "Agencia",
-                                "description": "Puedes visitar nuestra agencia."
+                                "id": "regcivRequisitos",
+                                "title": "Requisitos",
+                                "description": "Consulta de requsitos de registro civil"
                             },
                             {
-                                "id": "main-contacto",
-                                "title": "Centro de contacto",
-                                "description": "Te atenderá uno de nuestro agentes."
+                                "id": "regcivCopias",
+                                "title": "Solicitar copias",
+                                "description": "Solciita una copia de tu registro civil"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "📄 Servicios generales",
+                        "rows": [
+                            {
+                                "id": "servgenHorarioUbicacion",
+                                "title": "Horarios",
+                                "description": "Conlta los horarios de atención"
+                            },
+                            {
+                                "id": "servgenDirectorio",
+                                "title": "Directorio",
+                                "description": "Consulta directorio telefónico de la notaria"
+                            },
+                            {
+                                "id": "otrosServicios",
+                                "title": "Otras opciones",
+                                "description": "Admnistración, contabilidad, turnos sábados, entre otros"
+                            }
+                        ]
+                    }
+                    
+                ]
+            }
+        }
+    });
+    return data;
+}
+function MessageListOtrasOpciones(number) {
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "to": number,
+        "type": "interactive",
+        "interactive": {
+            "type": "list",
+            "header": {
+                "type": "text",
+                "text": "Hola, 🗄️🧾⏱️ estas en el menú de *Otras Opciones* "
+            },
+            "body": {
+                "text": "_Por favor haz click en el botón de *Ver opciones* y seleciona a continuación_"
+            },
+            "footer": {
+                "text": "Notaria Décima(10) de Bucaramanga!!"
+            },
+            "action": {
+                "button": "Ver opciones",
+                "sections": [
+                    {
+                        "title": "🗄️ Administración",
+                        "rows": [
+                            {
+                                "id": "adminCopiaFactura",
+                                "title": "Copia de factura",
+                                "description": "Solciita una copia de tu factura"
+                            },
+                            {
+                                "id": "adminCertirete",
+                                "title": "Certificado de retención",
+                                "description": "Solcicita una copia de tu certificado de retención"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "🧾 Cotización",
+                        "rows": [
+                            {
+                                "id": "cotizacion",
+                                "title": "Cotización",
+                                "description": "Cotizador web de servicios notariales"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "⏱️ Otros",
+                        "rows": [
+                            {
+                                "id": "turnosSabados",
+                                "title": "Turnos sábados",
+                                "description": "Consulta la notaria que atiende los sábados"
                             }
                         ]
                     }
@@ -63,11 +185,11 @@ function MessageList(number){
     });
     return data;
 }
-function MessageComprar(number){
+function MessageComprar(number) {
     const data = JSON.stringify({
         "messaging_product": "whatsapp",
         "to": number,
-        "type": "interactive",  
+        "type": "interactive",
         "interactive": {
             "type": "button",
             "body": {
@@ -91,30 +213,32 @@ function MessageComprar(number){
                     }
                 ]
             }
-        }     
+        }
     });
     return data;
 }
 
-function MessageLocation(number){
+function MessageLocation(number) {
     const data = JSON.stringify({
         "messaging_product": "whatsapp",
         "to": number,
         "type": "location",
         "location": {
-        "latitude": "-12.067158831865067",
-        "longitude": "-77.03377940839486",
-        "name": "Estadio Nacional del Perú",
-        "address": "C. José Díaz s/n, Cercado de Lima 15046"
-    }
-        
+            "latitude": "7.127277261801313 ",
+            "longitude": "-73.12431741927347",
+            "name": "Notaria Décima (10) de Bucaramanga",
+            "address": "Cra. 21 #22-30, Comuna 4 Occidental, Bucaramanga, Santander"
+        }
+
     });
     return data;
 }
 
 module.exports = {
-MessageText,
-MessageList,
-MessageComprar,
-MessageLocation
+    MessageText,
+    MessageListOpciones,
+    MessageListOtrasOpciones,
+    MessageComprar,
+    MessageLocation,
+    MessageButtonsMenu
 };
