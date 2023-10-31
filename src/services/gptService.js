@@ -4,7 +4,8 @@ const https = require("https");
 const gptConsole = new console.Console(fs.createWriteStream("gptLogs.txt"));
 
 async function SendToGpt(userMessage) {
-    gptConsole.clear();
+    gptConsole.log("entra a la clase")
+    
     var options = {
         'method': 'POST',
         'hostname': 'api.openai.com',
@@ -57,6 +58,6 @@ async function SendToGpt(userMessage) {
 
 
 module.exports = {
-    SendToGpt, gptConsole,getResponse
+    SendToGpt, gptConsole
 };
 

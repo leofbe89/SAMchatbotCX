@@ -1,16 +1,20 @@
 const whatsappModel = require("../shared/whatsappmodels");
 const whatsappService = require("../services/whatsappService");
+const gpt =require("../services/gptService")
 
 function Process(textUser, number){
     textUser= textUser.toLowerCase();
     var models = [];
 
     if(textUser.includes("hola")){
+        gpt.gptConsole.log("Entra al flow");
+
+        // var txtMsg=gpt.SendToGpt(textUser);
+        // gpt.gptConsole.log("r3 "+txtMsg);
+
         //SAUDAR
-        var model = whatsappModel.MessageText("Hola, un gusto saludarte. 👋", number);
-        models.push(model);
-        var modelList = whatsappModel.MessageList(number);
-        models.push(modelList);
+        var model = whatsappModel.MessageText("Recibiendo", number);
+        models.push(model);    
     }
     else if(textUser.includes("gracias")){
         // agradecimiento
