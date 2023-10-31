@@ -8,17 +8,10 @@ function Process(textUser, number){
     
     var models = [];
     if(textUser.includes("hola")){
-        gpt.gptConsole.log("Entra al flow");
-
-        // var txtMsg=gpt.SendToGpt(textUser);
-        // gpt.gptConsole.log("r3 "+txtMsg);
-
-        //SAUDAR
 
         var model = whatsappModel.MessageText("Hola soy SAM 👨‍💼 tu asistente notarial, un gusto saludarte!. 👋\n ¿Qué deseas hacer a continuación?", number);
         models.push(model);
-        // var modelList = whatsappModel.MessageList(number);
-        // models.push(modelList);
+       
         var menu = whatsappModel.MessageButtonsMenu(number);
         models.push(menu);
     } else if(textUser.includes("gracias")){
@@ -54,7 +47,15 @@ function Process(textUser, number){
         var model = whatsappModel.MessageText("📞*Centro de contacto:*\n912345678", number);
         models.push(model);       
 
-    } else{
+    }else if(textUser.includes("asesor virtual")){
+        gpt.gptConsole.log("Entra al flow");
+
+        // var txtMsg=gpt.SendToGpt(textUser);
+        // gpt.gptConsole.log("r3 "+txtMsg);
+
+        var model = whatsappModel.MessageText("Entra al flow de gpt", number);
+        models.push(model);   
+    }else{
         //No entiende
         var model = whatsappModel.MessageText("No entiendo lo que dices", number);
         models.push(model);
