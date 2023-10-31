@@ -1,18 +1,11 @@
 const whatsappModel = require("../shared/whatsappmodels");
 const whatsappService = require("../services/whatsappService");
-const gpt = require("../services/gptService")
+const gptService = require("../services/gptService")
 
 
-async function gptProcess(textUser, number) {
-    textUser = textUser.toLowerCase();
-    var models = [];
-
-    var model = whatsappModel.MessageText("Ahora el asesor interpretará tus respuestas", number);
-    models.push(model);
-
-    models.forEach(model => {
-        whatsappService.SendMessageWhatsApp(model);
-    });
+function sendToWhatsapp(txt,number){
+    var model = whatsappModel.MessageText(txt, number);
+    whatsappService.SendMessageWhatsApp(model);
 }
 
 
@@ -59,7 +52,7 @@ function Process(textUser, number) {
         var model = whatsappModel.MessageText("📞*Centro de contacto:*\n912345678", number);
         models.push(model);
     } else if (textUser.includes("asesor virtual")) {
-        gptProcess(textUser,number)
+        gptProcess(textUser, number);
     } else {
         //No entiende
         var model = whatsappModel.MessageText("No entiendo lo que dices", number);
@@ -72,18 +65,7 @@ function Process(textUser, number) {
 
 }
 
-function gptProcess(textUser, number) {
-    textUser = textUser.toLowerCase();
-    var models = [];
-
-    var model = whatsappModel.MessageText("Ahora el asesor interpretará tus respuestas", number);
-    models.push(model);
-
-    models.forEach(model => {
-        whatsappService.SendMessageWhatsApp(model);
-    });
-}
 
 module.exports = {
-    Process, gptProcess
+    Process, sendToWhatsapp
 };
