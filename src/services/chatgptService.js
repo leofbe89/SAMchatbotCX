@@ -1,7 +1,7 @@
-// const {Configuration, OpenAIApi} = require("openai");
-//     async function getmessageChatGPT(text){
-//         const Configuration = new Configuration({apiKey: process.env.OPENAI_API_KEY});  
-//     }
+const {Configuration, OpenAIApi} = require("openai");
+    async function getmessageChatGPT(text){
+        const Configuration = new Configuration({apiKey: process.env.OPENAI_API_KEY});  
+    }
 //respuesta sugerida copilor    
 // async function getMessageFromGPT(textUser, number){
 //     const openai = new OpenAIApi(process.env.OPENAI_API_KEY);
