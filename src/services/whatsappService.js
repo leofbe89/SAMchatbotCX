@@ -1,8 +1,9 @@
 const fs = require("fs");
 const myConsole = new console.Console(fs.createWriteStream("./logs.txt"));
 const https = require("https");
-function SendMessageWhatsApp(data){
-    //hola soy fabian
+
+function SendMessageWhatsApp(data){ 
+
     const options = {
         host: "graph.facebook.com",
         path: "/v17.0/129578616908565/messages",
