@@ -1,5 +1,6 @@
 const whatsappModel = require("../shared/whatsappmodels");
 const whatsappService = require("../services/whatsappService");
+const gpt =require("../services/gptService")
 
 function Process(textUser, number){
     textUser= textUser.toLowerCase();
@@ -7,7 +8,13 @@ function Process(textUser, number){
     
     var models = [];
     if(textUser.includes("hola")){
+        gpt.gptConsole.log("Entra al flow");
+
+        // var txtMsg=gpt.SendToGpt(textUser);
+        // gpt.gptConsole.log("r3 "+txtMsg);
+
         //SAUDAR
+
         var model = whatsappModel.MessageText("Hola soy SAM 👨‍💼 tu asistente notarial, un gusto saludarte!. 👋\n ¿Qué deseas hacer a continuación?", number);
         models.push(model);
         // var modelList = whatsappModel.MessageList(number);
@@ -15,6 +22,7 @@ function Process(textUser, number){
         var menu = whatsappModel.MessageButtonsMenu(number);
         models.push(menu);
     } else if(textUser.includes("gracias")){
+
         // agradecimiento
         var model = whatsappModel.MessageText("Gracias a ti por escribirme. 😉😎", number);
         models.push(model);       
