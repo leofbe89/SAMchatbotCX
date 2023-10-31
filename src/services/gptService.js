@@ -12,7 +12,7 @@ async function SendToGpt(userMessage) {
         'path': '/v1/chat/completions',
         'headers': {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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'
+            'Authorization': 'Bearer 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'
         },
         'maxRedirects': 20
     };
