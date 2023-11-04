@@ -1,3 +1,4 @@
+
 function MessageText(textResponse, number) {
     const data = JSON.stringify({
         "messaging_product": "whatsapp",
@@ -179,7 +180,7 @@ function MessageEstadoTramite(number) {
                         "type": "reply",
                         "reply": {
                             "id": "consultaRadicacion",
-                            "title": "Consulta radicacón"
+                            "title": "Consulta radicacion"
                         }
                     },
                     {
@@ -199,6 +200,18 @@ function MessageEstadoTramite(number) {
                 ]
             }
         }
+    });
+    return data;
+}
+function MessageConsultaRadicacion(number) {
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "to": number,
+        "text": {
+            "preview_url": true,
+            "body": "Por favor ingresa el codigo RAD número de radicación que deseas consultar, separados por el signo (-) . _Ejemplo:_ RAD-12345"
+        },
+        "type": "text"
     });
     return data;
 }
@@ -291,142 +304,6 @@ function MessageRegistroCivilCopias(number) {
          });
          return data;
 }
-// function MessageRequisitos_2(number) {
-//     const data = JSON.stringify({
-//         "messaging_product": "whatsapp",
-//         "to": number,
-//         "type": "interactive",
-//         "interactive": {
-//             "type": "list",
-//             "header": {
-//                 "type": "text",
-//                 "text": "Hola, menu de requisitos!"
-//             },
-//             "body": {
-//                 "text": "_Por favor haz click en el botón de *Ver opciones* y seleciona a continuación el acto a consultar_"
-//             },
-//             "footer": {
-//                 "text": "Notaria Décima(10) de Bucaramanga!!"
-//             },
-//             "action": {
-//                 "button": "Ver opciones",
-//                 "sections": [
-//                     {
-//                         "title": "Compraventas",
-//                         "rows": [
-//                             {
-//                                 "id": "escRequisitos",
-//                                 "title": "Compraventa de bienes inmuebles",
-//                                 "description": "Consulta de requisitos por actos notariales"
-//                             },
-//                             {
-//                                 "id": "escEstadoTramite",
-//                                 "title": "Estado de trámite",
-//                                 "description": "Consulta el estado de tu trámite o radiación"
-//                             },
-//                             {
-//                                 "id": "escCopias",
-//                                 "title": "Solicita una copia",
-//                                 "description": "Soliciita una copia de tu escritura"
-//                             },
-//                             {
-//                                 "id": "servgenHorarioUbicacion",
-//                                 "title": "Horarios",
-//                                 "description": "Conlta los horarios de atención"
-//                             },
-//                             {
-//                                 "id": "servgenDirectorio",
-//                                 "title": "Directorio",
-//                                 "description": "Consulta directorio telefónico de la notaria"
-//                             },
-//                             {
-//                                 "id": "otrosServicios",
-//                                 "title": "Otras opciones",
-//                                 "description": "Admnistración, contabilidad, turnos sábados, entre otros"
-//                             }
-//                         ]
-//                     },
-//                     {
-//                         "title": "🔙🔜 Navegación",
-//                         "rows": [
-//                             {
-//                                 "id": "requiAnterior_1",
-//                                 "title": "Anterior menú",
-//                                 "description": "Anterior lista de opciones"
-//                             }
-//                         ]
-//                     }
-                    
-//                 ]
-//             }
-//         }
-//     });
-//     return data;
-// }
-// function MessageListOtrasOpciones(number) {
-//     const data = JSON.stringify({
-//         "messaging_product": "whatsapp",
-//         "to": number,
-//         "type": "interactive",
-//         "interactive": {
-//             "type": "list",
-//             "header": {
-//                 "type": "text",
-//                 "text": "Hola, Haz seleccionado el manú de otros servicios!"
-//             },
-//             "body": {
-//                 "text": "_Por favor haz click en el botón de *Ver opciones* y seleciona a continuación_"
-//             },
-//             "footer": {
-//                 "text": "Notaria Décima(10) de Bucaramanga!!"
-//             },
-//             "action": {
-//                 "button": "Ver opciones",
-//                 "sections": [
-//                     {
-//                         "title": "🗄️Administración",
-//                         "rows": [
-//                             {
-//                                 "id": "adminCopiaFactura",
-//                                 "title": "Copia e factura",
-//                                 "description": "Consulta de requisitos por actos notariales"
-//                             },
-//                             {
-//                                 "id": "adminCertirete",
-//                                 "title": "Certificado de retención",
-//                                 "description": "Consulta el estado de tu trámite o radiación"
-//                             }
-//                         ]
-//                     },
-//                     {
-//                         "title": "👪 Cotización",
-//                         "rows": [
-//                             {
-//                                 "id": "cotizadorWeb",
-//                                 "title": "Cotizador Web",
-//                                 "description": "Cotizador web de servicios notariales"
-//                             }
-//                         ]
-//                     },
-//                     {
-//                         "title": "📄 Otros",
-//                         "rows": [
-//                             {
-//                                 "id": "turnosSabados",
-//                                 "title": "Sabados de turno",
-//                                 "description": "Consulta que notarias estan de turno los sabados"
-//                             }
-//                         ]
-//                     }
-                    
-//                 ]
-//             }
-//         }
-//     });
-//     return data;
-// }
-
-
 // function MessageLocation(number) {
 //     const data = JSON.stringify({
 //         "messaging_product": "whatsapp",
@@ -446,7 +323,7 @@ function MessageHorariosUbicacion(number) {
     const data = JSON.stringify({
         "messaging_product": "whatsapp",
         "recipient_type": "individual",
-        "to": "573168730185",
+        "to": number,
         "type": "template",
         "template": {
             "name": "horarios_ubicacion",
@@ -473,6 +350,459 @@ function MessageHorariosUbicacion(number) {
     });
     return data;
 }
+function MessageDirectorio (number) {
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "to": number,
+        "type": "interactive",
+        "interactive": {
+            "type": "list",
+            "header": {
+                "type": "text",
+                "text": "Hola, ☎️ Bienvenido al directorio de la Notaria décima (10)!"
+            },
+            "body": {
+                "text": "_Por favor haz click en el botón de *Ver directorio* y seleciona a continuación la dependencia que deseas consultar_"
+            },
+            "footer": {
+                "text": "!desarrollo de sinfony¡"
+            },
+            "action": {
+                "button": "Ver directorio",
+                "sections": [
+                    {
+                        "title": "Directorio ",
+                        "rows": [
+                            {
+                                "id": "dirAdministracion",
+                                "title": "Administracion",
+                                "description": "Diana Marcela. _Admnsitradora_"
+                            },
+                            {
+                                "id": "dirRegcivilDec",
+                                "title": "Reg civil ",
+                                "description": "Declarciones extrajuicio Maria Eugenia "
+                            },
+                            {
+                                "id": "dirContabilidad",
+                                "title": "Contabilidad",
+                                "description": "Santiago Giraldo. _Contador_"
+                            },
+                            {
+                                "id": "dirJuridica1",
+                                "title": "Dir juridico",
+                                "description": "De. Carlos Alberto. _director juridico_"
+                            },
+                            {
+                                "id": "dirJuridica2",
+                                "title": "Of Juridica",
+                                "description": "Dra. Alejandra Castellanos. _Abogada_"
+                            },
+                            {
+                                "id": "dirInformacion",
+                                "title": "informacion",
+                                "description": "Sandra Martinez. _Asistente administrativo_"
+                            }
+                        ]
+                    }                    
+                ]
+            }
+        }
+    });
+    return data;
+}
+
+//Mensajes plantilla del DIRECTORIO => en el futuro debe hacerse una plantilla carrousel
+function MessageDirAdministracion (number) {
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "template",
+        "template": {
+            "name": "directorio",
+            "language": {
+                "code": "es_MX"
+            },
+            "components": [
+                {
+                    "type": "header",
+                    "parameters": [
+                        {
+                            "type": "image",
+                            "image": {
+                                "link": "https://www.notariadecima.com/static/media/Oficina13.7b1f7729.jpg"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "body",
+                    "parameters": [
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "🗄️ Administración y recursos humanos"
+                        }
+                    ]
+                }
+            ]
+        }
+    });
+    return data;
+}
+function MessageDirRegcivDeclaraciones (number) {
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "template",
+        "template": {
+            "name": "directorio",
+            "language": {
+                "code": "es_MX"
+            },
+            "components": [
+                {
+                    "type": "header",
+                    "parameters": [
+                        {
+                            "type": "image",
+                            "image": {
+                                "link": "https://www.notariadecima.com/static/media/Oficina13.7b1f7729.jpg"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "body",
+                    "parameters": [
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "👪🧑‍⚖️ Registro civil y declraciones extrajuicio"
+                        }
+                    ]
+                }
+            ]
+        }
+    });
+    return data;
+}
+function MessageDirContabilidad (number) {
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "template",
+        "template": {
+            "name": "directorio",
+            "language": {
+                "code": "es_MX"
+            },
+            "components": [
+                {
+                    "type": "header",
+                    "parameters": [
+                        {
+                            "type": "image",
+                            "image": {
+                                "link": "https://www.notariadecima.com/static/media/Oficina13.7b1f7729.jpg"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "body",
+                    "parameters": [
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "💵 Contabilidad y procesos administrativos"
+                        }
+                    ]
+                }
+            ]
+        }
+    });
+    return data;
+}
+function MessageDirJuridica1 (number) {
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "template",
+        "template": {
+            "name": "directorio",
+            "language": {
+                "code": "es_MX"
+            },
+            "components": [
+                {
+                    "type": "header",
+                    "parameters": [
+                        {
+                            "type": "image",
+                            "image": {
+                                "link": "https://www.notariadecima.com/static/media/Oficina13.7b1f7729.jpg"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "body",
+                    "parameters": [
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "🧑‍⚖️ De partamento de consultas y asesoria juridica"
+                        }
+                    ]
+                }
+            ]
+        }
+    });
+    return data;
+}
+function MessageDirJuridica2 (number) {
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "template",
+        "template": {
+            "name": "directorio",
+            "language": {
+                "code": "es_MX"
+            },
+            "components": [
+                {
+                    "type": "header",
+                    "parameters": [
+                        {
+                            "type": "image",
+                            "image": {
+                                "link": "https://www.notariadecima.com/static/media/Oficina13.7b1f7729.jpg"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "body",
+                    "parameters": [
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "🧑‍⚖️ De partamento de consultas y asesoria juridica"
+                        }
+                    ]
+                }
+            ]
+        }
+    });
+    return data;
+}
+function MessageDirInformacion (number) {
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": number,
+        "type": "template",
+        "template": {
+            "name": "directorio",
+            "language": {
+                "code": "es_MX"
+            },
+            "components": [
+                {
+                    "type": "header",
+                    "parameters": [
+                        {
+                            "type": "image",
+                            "image": {
+                                "link": "https://www.notariadecima.com/static/media/Oficina13.7b1f7729.jpg"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "body",
+                    "parameters": [
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "text-string"
+                        },
+                        {
+                            "type": "text",
+                            "text": "🧑‍⚖️ Recepción e información"
+                        }
+                    ]
+                }
+            ]
+        }
+    });
+    return data;
+}
+// FIN Mensajes plantilla del DIRECTORIO 
+function MessageListOtrasOpciones(number) {
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "to": number,
+        "type": "interactive",
+        "interactive": {
+            "type": "list",
+            "header": {
+                "type": "text",
+                "text": "Hola, Haz seleccionado el manú de otros servicios!"
+            },
+            "body": {
+                "text": "_Por favor haz click en el botón de *Ver opciones* y seleciona a continuación_"
+            },
+            "footer": {
+                "text": "Notaria Décima(10) de Bucaramanga!!"
+            },
+            "action": {
+                "button": "Ver opciones",
+                "sections": [
+                    {
+                        "title": "🗄️Administración",
+                        "rows": [
+                            {
+                                "id": "adminCopiaFactura",
+                                "title": "Copia de factura",
+                                "description": "Consulta de requisitos por actos notariales"
+                            },
+                            {
+                                "id": "adminCertirete",
+                                "title": "Certificado de retención",
+                                "description": "Consulta el estado de tu trámite o radiación"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "👪 Cotización",
+                        "rows": [
+                            {
+                                "id": "cotizadorWeb",
+                                "title": "Cotizador Web",
+                                "description": "Cotizador web de servicios notariales"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "📄 Otros",
+                        "rows": [
+                            {
+                                "id": "turnosSabados",
+                                "title": "Sabados de turno",
+                                "description": "Consulta que notarias estan de turno los sabados"
+                            }
+                        ]
+                    }
+                    
+                ]
+            }
+        }
+    });
+    return data;
+}
+function MessageCopiaFactura (number){
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "to": number,
+        "type":"image",
+        "image": {
+            "link": "https://salesianas.org/wp-content/uploads/2018/01/construccion.jpg"
+        }
+    });
+    return data;
+}
+function MessageCertirete (number){
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "to": number,
+        "type":"image",
+        "image": {
+            "link": "https://salesianas.org/wp-content/uploads/2018/01/construccion.jpg"
+        }
+    });
+    return data;
+}
+function MessageCotizadorWeb (number){
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "to": number,
+        "text": {
+            "preview_url": true,
+            "body": "Te invitamos a visitar nuestro cotizador web https://www.notariadecima.com/cotizador "
+        }
+    });
+    return data;
+}
 
 function MessageUnderConstruction (number){
     const data = JSON.stringify({
@@ -490,13 +820,24 @@ module.exports = {
     MessageButtonsMenu,
     MessageListOpciones,
     MessageRequisitosESC,
-    //MessageListOtrasOpciones
+    MessageListOtrasOpciones,
     MessageEstadoTramite,
+    MessageConsultaRadicacion,
     MessageCopiasEscrituras,
     MessageRegistroCivilRequisitos,
     MessageRegistroCivilCopias,
     MessageHorariosUbicacion,
+    MessageDirectorio,
+    MessageDirAdministracion,
     //MessageLocation,
-    MessageUnderConstruction
+    MessageUnderConstruction,
+    MessageDirRegcivDeclaraciones,
+    MessageDirContabilidad,
+    MessageDirJuridica1,
+    MessageDirJuridica2,
+    MessageDirInformacion,
+    MessageCopiaFactura,
+    MessageCertirete,
+    MessageCotizadorWeb
     
 };
