@@ -1,37 +1,38 @@
 const fs = require("fs");
 const https = require("https");
-
+const processMessage = require("../shared/processMessage");
 const gptConsole = new console.Console(fs.createWriteStream("gptLogs.txt"));
 
-async function SendToGpt(userMessage) {
-    gptConsole.log("entra a la clase")
-    
+function SendToGpt(userMessage, number1) {
+    gptConsole.log("entra a la clase");
+
     var options = {
         'method': 'POST',
         'hostname': 'api.openai.com',
         'path': '/v1/chat/completions',
         'headers': {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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'
+            'Authorization': 'Bearer sk-'
         },
         'maxRedirects': 20
     };
 
-    var req = await https.request(options, res => {
+    var req = https.request(options, res => {
 
-        res.on("data", d => {
-
-            gptConsole.log("r1: " + d);
-
+        res.on("data",  d => {
             var responseJson = JSON.parse(d);
-
             var responseTxt = responseJson.choices[0].message.content;
-            return responseTxt;
+
+            gptConsole.log("r1: " + responseTxt);
+            processMessage.sendToWhatsapp(responseTxt, number1);
+
+            gptConsole.log("__________________respuesta enviada");
+            return "Finish";
         });
     });
 
     req.on("error", error => {
-        gptConsole.error(error);
+        gptConsole.log("error" + error);
         return "se obtuvo un error";
     });
 
@@ -40,7 +41,7 @@ async function SendToGpt(userMessage) {
         "messages": [
             {
                 "role": "system",
-                "content": "Eres un gran asistente"
+                "content": "Eres notario colombiano, escribe todo como texto plano"
             },
             {
                 "role": "user",
@@ -52,7 +53,7 @@ async function SendToGpt(userMessage) {
     req.write(postData);
 
     req.end();
-    
+    gptConsole.log("Sale de la clase")
 }
 
 

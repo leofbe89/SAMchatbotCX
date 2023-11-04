@@ -1,4 +1,6 @@
+
 const fs = require("fs");
+const gptService= require("../services/gptService");
 const myConsole = new console.Console(fs.createWriteStream("./logs.txt"));
 const processMessage = require("../shared/processMessage");
 const VerifyToken = (req, res) => {
@@ -30,9 +32,13 @@ const ReceivedMessage = (req, res) => {
             var messages = messageObject[0];
             var number = messages["from"];
 
-            var text = GetTextUser(messages); 
-            myConsole.log(text);
-            if(text != ""){
+            var text = GetTextUser(messages);
+            if (text.toLowerCase().includes("asesor virtual")) {
+                myConsole.log("Entro al codigo");
+                myConsole.log("+1"+process.env);
+                myConsole.log("+2"+JSON.stringify(process.env));
+                myConsole.log("F "+gptService.SendToGpt(text, number));
+            }else if(text != ""){
                 processMessage.Process(text, number);
             } 
 
@@ -45,7 +51,7 @@ const ReceivedMessage = (req, res) => {
     }
 }
 
-function GetTextUser(messages){
+ function GetTextUser(messages){
     var text = "";
     var typeMessge = messages["type"];
     if(typeMessge == "text"){

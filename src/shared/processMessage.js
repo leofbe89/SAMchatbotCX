@@ -3,15 +3,32 @@ const whatsappService = require("../services/whatsappService");
 const config = require("../shared/config");
 const adapterMySql = require("../controllers/adapter");
 
-async function Process(textUser, number) {
+
+const gptService = require("../services/gptService")
+
+
+function sendToWhatsapp(txt,number){
+    var model = whatsappModel.MessageText(txt, number);
+    whatsappService.SendMessageWhatsApp(model);
+}
+
+
+
+function Process(textUser, number) {
     textUser = textUser.toLowerCase();
-    const matchedPattern = config.patterns.find(item => item.pattern.test(textUser));
     var response = [];
-    if(textUser.includes("hola")){
-        //SALUDAR
+ 
+    
+  const matchedPattern = config.patterns.find(item => item.pattern.test(textUser));
+    
+    if (textUser.includes("hola")) {
+
+
         var model = whatsappModel.MessageText("Hola soy SAM 👨‍💼 tu asistente notarial, un gusto saludarte!. 👋\n ¿Qué deseas hacer a continuación?", number);
         response.push(model);
         var menu = whatsappModel.MessageButtonsMenu(number);
+      
+
         response.push(menu);
         } 
         else if(textUser.includes("rad-") || textUser.includes("rad- ")){
