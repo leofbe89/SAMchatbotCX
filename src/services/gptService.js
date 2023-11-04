@@ -3,7 +3,7 @@ const https = require("https");
 const processMessage = require("../shared/processMessage");
 const gptConsole = new console.Console(fs.createWriteStream("gptLogs.txt"));
 
-async function SendToGpt(userMessage, number1) {
+function SendToGpt(userMessage, number1) {
     gptConsole.log("entra a la clase");
 
     var options = {
@@ -17,18 +17,17 @@ async function SendToGpt(userMessage, number1) {
         'maxRedirects': 20
     };
 
-    var req = await https.request(options, res => {
+    var req = https.request(options, res => {
 
-        res.on("data", d => {
+        res.on("data",  d => {
             var responseJson = JSON.parse(d);
-
             var responseTxt = responseJson.choices[0].message.content;
 
             gptConsole.log("r1: " + responseTxt);
             processMessage.sendToWhatsapp(responseTxt, number1);
 
             gptConsole.log("__________________respuesta enviada");
-
+            return "Finish";
         });
     });
 
@@ -42,7 +41,7 @@ async function SendToGpt(userMessage, number1) {
         "messages": [
             {
                 "role": "system",
-                "content": "Eres un gran asistente"
+                "content": "Eres notario colombiano, escribe todo como texto plano"
             },
             {
                 "role": "user",
