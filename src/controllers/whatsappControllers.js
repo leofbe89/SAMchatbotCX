@@ -1,7 +1,7 @@
 const fs = require("fs");
 const myConsole = new console.Console(fs.createWriteStream("./logs.txt"));
 const processMessage = require("../shared/processMessage");
-const gptService = require("../services/gptService");
+//const gptService = require("../services/gptService");
 
 const VerifyToken = (req, res) => {
     try{
@@ -31,12 +31,8 @@ async function ReceivedMessage (req, res) {
             var number = messages["from"];
 
             var text = GetTextUser(messages);
-            if(process.env.FLAG_GPT=="1"){
-                const resultGpt = await gptService.SendToGpt(text);
-                myConsole.log("asesor virtual   "+process.env.Authorization);
-                myConsole.log("mensaje recibio para asesor virual: "+ resultGpt + " para el numero: " + number);
-                processMessage.sendGptToWhatsapp(resultGpt, number);
-            } else if(text != ""){
+             if(text != ""){
+                myConsole.log("Received text controllers: " + text);
                 processMessage.Process(text, number);
             } 
         }        

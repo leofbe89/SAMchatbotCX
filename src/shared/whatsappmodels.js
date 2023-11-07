@@ -802,13 +802,39 @@ function MessageCotizadorWeb (number){
     });
     return data;
 }
-function MessageFinalziarChat(number) {
+function MessageFinalizarChat(number) {
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": "573168730185",
+        "type": "interactive",
+        "interactive": {
+            "type": "button",
+            "body": {
+                "text": "Preciona 👉 *Finalziar chat* para terminar el Asesor Virtual."
+            },
+            "action": {
+                "buttons": [
+                    {
+                        "type": "reply",
+                        "reply": {
+                            "id": "finalizarChat",
+                            "title": "Finalizar chat"
+                        }
+                    }
+                ]
+            }
+        }
+    });
+    return data;
+}
+function MessageGracias(number){
     const data = JSON.stringify({
         "messaging_product": "whatsapp",
         "to": number,
         "text": {
             "preview_url": true,
-            "body": "🔜 Gracias por utilizar los servicios de nuestro asesor virtual! Esperamos hibiese sido de gran ayuda para responder tus inquietudes. \n *SAM* 👨‍💼"
+            "body": "Gracias por utlizar los servicios de 🧑‍⚖️ *SAM Asesor Virtual*. Hasta la próxima!!!"
         },
         "type": "text"
     });
@@ -849,5 +875,6 @@ module.exports = {
     MessageCopiaFactura,
     MessageCertirete,
     MessageCotizadorWeb,
-    MessageFinalziarChat
+    MessageFinalizarChat,
+    MessageGracias,
 };

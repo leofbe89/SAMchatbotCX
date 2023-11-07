@@ -1,28 +1,30 @@
 const whatsappModel = require("../shared/whatsappmodels");
 const whatsappService = require("../services/whatsappService");
 const config = require("../shared/config");
+const gptService = require("../services/gptService");
 const fs = require("fs");
 const myConsole = new console.Console(fs.createWriteStream("./logs.txt"));
-//const gptService = require("../services/gptService");
 
-async function sendGptToWhatsapp(textUser, number) {
-    var model = whatsappModel.MessageText(textUser, number);
-    whatsappService.SendMessageWhatsApp(model);
-    myConsole.log("mensaje enviado a whatsapp despues de gpt: " + textUser + " para el numero: " + number);
-}
 async function Process(textUser, number) {
-    textUser = textUser.toLowerCase();
+    myConsole.log("Text User: " + textUser);
     var response = [];
     const matchedPattern = config.patterns.find(item => item.pattern.test(textUser));
-    if(textUser.includes("finalizar chat")){
+    if(textUser.toLowerCase().includes("finalizar chat")){
         process.env.FLAG_GPT = "0";
-        var model = whatsappModel.MessageFinalziarChat(number);
+        var model = whatsappModel.MessageGracias(number);
         response.push(model);
-    } else if(textUser.includes("asesor virtual")){
+    } else if(textUser.toLowerCase().includes("asesor virtual")){
         var model = whatsappModel.MessageText("Escribe tu pregunta para el asesor virtual", number);
         response.push(model);
         process.env.FLAG_GPT = "1"; 
-    } else if (textUser.includes("hola")) {
+    } else if(process.env.FLAG_GPT=="1"){
+        const resultGpt = await gptService.SendToGpt(textUser);
+        myConsole.log("resultGPT:    " + resultGpt);
+        var model1 = whatsappModel.MessageText(resultGpt, number);
+        response.push(model1);
+        var fin = whatsappModel.MessageFinalizarChat(number);
+        response.push(fin);
+    } else if (textUser.toLowerCase().includes("hola")) {
         var model = whatsappModel.MessageText("Hola soy SAM 👨‍💼 tu asistente notarial, un gusto saludarte!. 👋\n ¿Qué deseas hacer a continuación?", number);
         response.push(model);
         var menu = whatsappModel.MessageButtonsMenu(number);
@@ -36,10 +38,10 @@ async function Process(textUser, number) {
     }
     let uniqueResponses = new Set(response.map(JSON.stringify));
     let uniqueResponseArray = Array.from(uniqueResponses).map(JSON.parse);
-    uniqueResponseArray.forEach(model => {
-        whatsappService.SendMessageWhatsApp(model);
+    uniqueResponseArray.forEach(async model =>  {
+        await whatsappService.SendMessageWhatsApp(model);
     });
 }
 module.exports = {
-    Process,sendGptToWhatsapp
+    Process
 };

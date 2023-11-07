@@ -30,6 +30,7 @@ const config = {
     { pattern: /copia de factura/i, response: "adminCopiaFactura" },
     { pattern: /certificado de retencion/i, response: "adminCertirete" },
     { pattern: /Cotizador/i, response: "cotizadorWeb" },
+    { pattern: /finalizar chat/i, response: "finalizarChat" },
     //{ pattern: /siguiente/i, response: "requiSiguiente_1" },
     //{ pattern: /anterior/i, response: "requiAnterior_1" },
     
@@ -67,6 +68,7 @@ const config = {
     
     //"requiSiguiente_1": whatsappModel.MessageRequisitos_2,
    // "requiAnterior_1": whatsappModel.MessageRequisitos_1,
+   "finalizarChat": whatsappModel.MessageFinalizarChat,
   }
 };
 
