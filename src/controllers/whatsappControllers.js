@@ -1,10 +1,9 @@
-
 const fs = require("fs");
-const gptService= require("../services/gptService");
 const myConsole = new console.Console(fs.createWriteStream("./logs.txt"));
 const processMessage = require("../shared/processMessage");
+const gptService = require("../services/gptService");
+
 const VerifyToken = (req, res) => {
-    
     try{
         var accessToken = "RTQWWTVHBDEJHJKIKIKNDS9090DS";
         var token = req.query["hub.verify_token"];
@@ -20,8 +19,7 @@ const VerifyToken = (req, res) => {
         res.status(400).send();
     }
 }
-
-const ReceivedMessage = (req, res) => {
+async function ReceivedMessage (req, res) {
     try{
         var entry = (req.body["entry"])[0];
         var changes = (entry["changes"])[0];
@@ -33,25 +31,22 @@ const ReceivedMessage = (req, res) => {
             var number = messages["from"];
 
             var text = GetTextUser(messages);
-            if (text.toLowerCase().includes("asesor virtual")) {
-                myConsole.log("Entro al codigo");
-                myConsole.log("+1"+process.env);
-                myConsole.log("+2"+JSON.stringify(process.env));
-                myConsole.log("F "+gptService.SendToGpt(text, number));
-            }else if(text != ""){
+            if(process.env.FLAG_GPT=="1"){
+                const resultGpt = await gptService.SendToGpt(text);
+                myConsole.log("asesor virtual   "+process.env.Authorization);
+                myConsole.log("mensaje recibio para asesor virual: "+ resultGpt + " para el numero: " + number);
+                processMessage.sendGptToWhatsapp(resultGpt, number);
+            } else if(text != ""){
                 processMessage.Process(text, number);
             } 
-
         }        
-
         res.send("EVENT_RECEIVED");
     }catch(e){
         myConsole.log(e);
         res.send("EVENT_RECEIVED");
     }
 }
-
- function GetTextUser(messages){
+function GetTextUser(messages){
     var text = "";
     var typeMessge = messages["type"];
     if(typeMessge == "text"){
@@ -75,7 +70,6 @@ const ReceivedMessage = (req, res) => {
     }
     return text;
 }
-
 module.exports = {
     VerifyToken,
     ReceivedMessage

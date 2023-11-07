@@ -1,6 +1,6 @@
-
-const fs = require("fs");
-const myConsole = new console.Console(fs.createWriteStream("./logs.txt"));
+const fs = require('fs');
+const { Console } = require('console')
+const myConsole = new Console(fs.createWriteStream("./logs.txt"));
 const https = require("https");
 
 function SendMessageWhatsApp(data){ 
@@ -12,7 +12,7 @@ function SendMessageWhatsApp(data){
         body: data,
         headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer EAAVROue4zIkBO64SmCySLNNbEvKZBRR8E6rmTiz6W56pIMhbZCQD9tZBJSn52DZBBkLTsquqdUZAmVZAz2ZBs1FlOZAbplzXMRZB97kSKyQZByZCZB2dNzIM9pZC62I0az4uYFSFZBzLzY3tjbXbocd6d3a74spheaJg6gCZAs8ehVfsbCpeCWUEVBOlcYdq53RVhkTNVFZC0zdfDCTDpKSlOoYZD"
+            Authorization: "Bearer EAAVROue4zIkBO6bRodOZAaTZBtIv7ZB7xoIiaotlCaHCwaJ7dHGJPADJjoTV5mfk6zf2J6VGhJFklHqtkMSF08de9S5hJNEs28NtcpNhwqXZA7YYZCFpa2pijOZBa6b8ztYpKSmInKJ36IOiG9lJR6L1wcTJJS8AWkcvZCwacEaYY2MJYYdSDPz2YKZALZC9s3GO7eZBZBvZB6ikvNDAdp8tv3pyDyYrmPMuypENxIzZCW7EZD"
         }
     };
     const req = https.request(options, res => {
@@ -22,7 +22,7 @@ function SendMessageWhatsApp(data){
     });
 
     req.on("error", error => {
-        console.error(error);
+        myConsole.error(error);
     });
 
     req.write(data);

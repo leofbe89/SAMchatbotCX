@@ -411,7 +411,6 @@ function MessageDirectorio (number) {
     });
     return data;
 }
-
 //Mensajes plantilla del DIRECTORIO => en el futuro debe hacerse una plantilla carrousel
 function MessageDirAdministracion (number) {
     const data = JSON.stringify({
@@ -803,7 +802,18 @@ function MessageCotizadorWeb (number){
     });
     return data;
 }
-
+function MessageFinalziarChat(number) {
+    const data = JSON.stringify({
+        "messaging_product": "whatsapp",
+        "to": number,
+        "text": {
+            "preview_url": true,
+            "body": "🔜 Gracias por utilizar los servicios de nuestro asesor virtual! Esperamos hibiese sido de gran ayuda para responder tus inquietudes. \n *SAM* 👨‍💼"
+        },
+        "type": "text"
+    });
+    return data;
+}
 function MessageUnderConstruction (number){
     const data = JSON.stringify({
         "messaging_product": "whatsapp",
@@ -838,6 +848,6 @@ module.exports = {
     MessageDirInformacion,
     MessageCopiaFactura,
     MessageCertirete,
-    MessageCotizadorWeb
-    
+    MessageCotizadorWeb,
+    MessageFinalziarChat
 };

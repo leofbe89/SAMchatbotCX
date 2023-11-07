@@ -1,64 +1,37 @@
+var request = require('request-promise-native');
 const fs = require("fs");
-const https = require("https");
-const processMessage = require("../shared/processMessage");
 const gptConsole = new console.Console(fs.createWriteStream("gptLogs.txt"));
-
-function SendToGpt(userMessage, number1) {
-    gptConsole.log("entra a la clase");
-
+async function SendToGpt(textUser){
     var options = {
-        'method': 'POST',
-        'hostname': 'api.openai.com',
-        'path': '/v1/chat/completions',
-        'headers': {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer sk-'
+    'method': 'POST',
+    'url': 'https://api.openai.com/v1/chat/completions',
+    'headers': {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer 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'
+    },
+    body: JSON.stringify({
+      "model": "gpt-3.5-turbo",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Eres un notario de colombia, experto en titulos y tierras y te sabes el estatuto notarial y el codigo civil colombiano, responde en texto plano"
         },
-        'maxRedirects': 20
-    };
-
-    var req = https.request(options, res => {
-
-        res.on("data",  d => {
-            var responseJson = JSON.parse(d);
-            var responseTxt = responseJson.choices[0].message.content;
-
-            gptConsole.log("r1: " + responseTxt);
-            processMessage.sendToWhatsapp(responseTxt, number1);
-
-            gptConsole.log("__________________respuesta enviada");
-            return "Finish";
-        });
-    });
-
-    req.on("error", error => {
-        gptConsole.log("error" + error);
-        return "se obtuvo un error";
-    });
-
-    var postData = JSON.stringify({
-        "model": "gpt-3.5-turbo-0301",
-        "messages": [
-            {
-                "role": "system",
-                "content": "Eres notario colombiano, escribe todo como texto plano"
-            },
-            {
-                "role": "user",
-                "content": userMessage
-            }
-        ]
-    });
-
-    req.write(postData);
-
-    req.end();
-    gptConsole.log("Sale de la clase")
+        {
+          "role": "user",
+          "content": textUser
+        }
+      ]
+    })
+  
+  };
+  try {
+    let response = await request(options);
+    let textResponse = JSON.parse(response);
+    let text = textResponse['choices'][0]['message']['content'];
+    gptConsole.log("Mensaje respta de gpt" + text);
+    return text;
+} catch (error) {
+    throw new Error(error);
 }
-
-
-
-module.exports = {
-    SendToGpt, gptConsole
-};
-
+}
+module.exports = {SendToGpt};
